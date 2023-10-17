@@ -1,42 +1,48 @@
-import {Component} from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Component } from "react";
+import logo from "./logo.svg";
+import "./App.css";
 
-class App extends Component{
-  constructor(){
+class App extends Component {
+  constructor() {
     super();
     this.state = {
-      name: {firstName:'Guest', lastName:''},
-      company : 'ZTM'
+      monsters: [
+        {
+          name: "Linda",
+          id: "12er432110",
+        },
+        {
+          name: "Frank",
+          id: "12er432111",
+        },
+        {
+          name: "Jacky",
+          id: "12er432112",
+        },
+        {
+          name: "Karthik",
+          id: "12er432113",
+        },
+        {
+          name: "Krishna",
+          id: "12er432114",
+        },
+      ],
     };
   }
-  onClickEvent = () =>{
-    
-  }
-  render(){
+  render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Hi {this.state.name.firstName} {this.state.name.lastName} , I work at {this.state.company}
-          </p>
-          <button onClick={()=>{
-            this.setState(()=>{
-              return {
-                name: {firstName: 'Karthik', lastName: 'Adiga'}
-              }
-            }
-            , ()=>{
-              console.log('inside cb', this.state)
-            }
-            );
-            // console.log('outside', this.state)
-          }}>Change Name</button>
-        </header>
+        {this.state.monsters.map((m) => {
+          return (
+            <div key={m.id}>
+              <h1>{m.name}</h1>
+            </div>
+          );
+        })}
       </div>
     );
-  }  
+  }
 }
 
 export default App;
