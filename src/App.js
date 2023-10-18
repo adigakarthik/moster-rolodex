@@ -6,30 +6,27 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      monsters: [
-        {
-          name: "Linda",
-          id: "12er432110",
-        },
-        {
-          name: "Frank",
-          id: "12er432111",
-        },
-        {
-          name: "Jacky",
-          id: "12er432112",
-        },
-        {
-          name: "Karthik",
-          id: "12er432113",
-        },
-        {
-          name: "Krishna",
-          id: "12er432114",
-        },
-      ],
+      monsters: [],
     };
   }
+
+  // this is used to load the api data while component is created very first time
+  // good place to do network requests
+  componentDidMount() {
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then((res) => res.json())
+      .then((users) =>
+        this.setState(
+          () => {
+          return { monsters: users };
+          },()=>{
+            // this is a callback once state is set
+            console.log('Api data loaded to state')
+          }
+        )
+      );
+  }
+
   render() {
     return (
       <div className="App">
