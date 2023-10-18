@@ -18,10 +18,11 @@ class App extends Component {
       .then((users) =>
         this.setState(
           () => {
-          return { monsters: users };
-          },()=>{
+            return { monsters: users };
+          },
+          () => {
             // this is a callback once state is set
-            console.log('Api data loaded to state')
+            console.log("Api data loaded to state");
           }
         )
       );
@@ -30,6 +31,27 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <input
+          className="search-box"
+          type="search"
+          placeholder="search monsters"
+          onChange={(event) => {
+            const searchText = event.target.value.toLocaleLowerCase()
+            console.log(searchText);
+
+            const filteredMonsters = this.state.monsters.filter((m)=>{
+              return m.name.toLocaleLowerCase().includes(searchText);
+            });
+
+            // set & trigger render
+            this.setState(
+              () => {
+                return { monsters: filteredMonsters };
+              }
+            )
+
+          }}
+        />
         {this.state.monsters.map((m) => {
           return (
             <div key={m.id}>
