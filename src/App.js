@@ -5,9 +5,9 @@ import "./App.css";
 class App extends Component {
   constructor() {
     super();
-    const origMonsters= [];
     this.state = {
       monsters: [],
+      searchField: "",
     };
   }
 
@@ -19,7 +19,6 @@ class App extends Component {
       .then((users) =>
         this.setState(
           () => {
-            this.origMonsters= users;
             return { monsters: users };
           },
           () => {
@@ -31,6 +30,11 @@ class App extends Component {
   }
 
   render() {
+    // this is to leverage the filter than the orig data set
+    const filteredMonsters = this.state.monsters.filter((m) => {
+      return m.name.toLocaleLowerCase().includes(this.state.searchField);
+    });
+
     return (
       <div className="App">
         <input
@@ -38,24 +42,17 @@ class App extends Component {
           type="search"
           placeholder="search monsters"
           onChange={(event) => {
-            const searchText = event.target.value.toLocaleLowerCase();
-            // console.log(this.origMonsters);
-            console.log(searchText);
-
-            const filteredMonsters = this.origMonsters.filter((m)=>{
-              return m.name.toLocaleLowerCase().includes(searchText);
-            });
+            const searchField = event.target.value.toLocaleLowerCase();
+            console.log(searchField);
 
             // set & trigger render
-            this.setState(
-              () => {
-                return { monsters: filteredMonsters };
-              }
-            )
-
+            // here we're just updating the search text & let render handle the UI update
+            this.setState(() => {
+              return { searchField };
+            });
           }}
         />
-        {this.state.monsters.map((m) => {
+        {filteredMonsters.map((m) => {
           return (
             <div key={m.id}>
               <h1>{m.name}</h1>
