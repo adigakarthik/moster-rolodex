@@ -5,6 +5,7 @@ import "./App.css";
 class App extends Component {
   constructor() {
     super();
+    const origMonsters= [];
     this.state = {
       monsters: [],
     };
@@ -18,6 +19,7 @@ class App extends Component {
       .then((users) =>
         this.setState(
           () => {
+            this.origMonsters= users;
             return { monsters: users };
           },
           () => {
@@ -36,10 +38,11 @@ class App extends Component {
           type="search"
           placeholder="search monsters"
           onChange={(event) => {
-            const searchText = event.target.value.toLocaleLowerCase()
+            const searchText = event.target.value.toLocaleLowerCase();
+            // console.log(this.origMonsters);
             console.log(searchText);
 
-            const filteredMonsters = this.state.monsters.filter((m)=>{
+            const filteredMonsters = this.origMonsters.filter((m)=>{
               return m.name.toLocaleLowerCase().includes(searchText);
             });
 
