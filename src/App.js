@@ -1,7 +1,8 @@
 import { Component } from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import CardList from './components/card-list/card-list.component';
+import CardList from "./components/card-list/card-list.component";
+import SearchBox from "./components/search-box/search-box.component";
 
 class App extends Component {
   constructor() {
@@ -15,11 +16,11 @@ class App extends Component {
   // this is used to load the api data while component is created very first time
   // good place to do network requests
   componentDidMount() {
-    this.loadData()
+    this.loadData();
   }
 
   //Call the 3rd party api data
-  loadData = () =>{
+  loadData = () => {
     fetch("https://jsonplaceholder.typicode.com/users")
       .then((res) => res.json())
       .then((users) =>
@@ -33,9 +34,10 @@ class App extends Component {
           }
         )
       );
-  }
+  };
 
   // create a named fn for optimization
+  // this a callback via searchbox & updates the state
   onSearchChange = (event) => {
     const searchField = event.target.value.toLocaleLowerCase();
     console.log(searchField);
@@ -59,13 +61,12 @@ class App extends Component {
 
     return (
       <div className="App">
-        <input
+        <SearchBox
+          onChangeHandler={onSearchChange}
+          placeholder="find monsters"
           className="search-box"
-          type="search"
-          placeholder="search monsters"
-          onChange={onSearchChange}
-        />        
-        <CardList monsters={filteredMonsters}/>
+        />
+        <CardList monsters={filteredMonsters} />
       </div>
     );
   }
